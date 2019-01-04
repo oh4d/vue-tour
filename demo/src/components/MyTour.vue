@@ -65,9 +65,15 @@ export default {
           params: {
             placement: 'left'
           }
+        },
+        {
+          target: '#v-step-4',
+          content: 'Change the user dom for the incoming step'
         }
       ],
       callbacks: {
+        onBeforePreviousStep: this.myCustomBeforePreviousStepCallback,
+        onBeforeNextStep: this.myCustomBeforeNextStepCallback,
         onPreviousStep: this.myCustomPreviousStepCallback,
         onNextStep: this.myCustomNextStepCallback
       }
@@ -78,6 +84,7 @@ export default {
 
     // A dynamically added onStop callback
     this.callbacks.onStop = () => {
+      this.$parent.closeSideBar()
       document.querySelector('#v-step-0').scrollIntoView({ behavior: 'smooth' })
     }
   },
@@ -86,7 +93,10 @@ export default {
       this.$tours['myTour'].nextStep()
     },
     showLastStep () {
-      this.$tours['myTour'].currentStep = this.steps.length - 1
+      this.$parent.openSideBar()
+      setTimeout(() => {
+        this.$tours['myTour'].currentStep = this.steps.length - 1
+      }, 300)
     },
     myCustomPreviousStepCallback (currentStep) {
       console.log('[Vue Tour] A custom previousStep callback has been called on step ' + (currentStep + 1))
@@ -97,6 +107,30 @@ export default {
       if (currentStep === 1) {
         console.log('[Vue Tour] A custom nextStep callback has been called from step 2 to step 3')
       }
+    },
+    myCustomBeforeNextStepCallback (nextStep, currentStep) {
+      console.log('[Vue Tour] A custom beforeNextStep callback has been called on step ' + (currentStep + 1))
+
+      if (currentStep === 4) {
+        this.$parent.openSideBar()
+
+        setTimeout(() => {
+          nextStep()
+        }, 300)
+
+        return
+      }
+
+      nextStep()
+    },
+    myCustomBeforePreviousStepCallback (previousStep, currentStep) {
+      console.log('[Vue Tour] A custom beforePreviousStep callback has been called on step ' + (currentStep + 1))
+
+      if (currentStep === 5) {
+        this.$parent.closeSideBar()
+      }
+
+      previousStep()
     }
   }
 }

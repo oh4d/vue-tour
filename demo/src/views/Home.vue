@@ -1,5 +1,10 @@
 <template>
   <div>
+    <div :class="{sidebar: true, open: (sidebar === 'open')}">
+      <div class="inner-siderbar">
+        <button class="btn btn-lg" id="v-step-4">Test</button>
+      </div>
+    </div>
     <div class="section section-hero bg-gray">
       <div id="overview" class="grid-hero container grid-lg text-center">
         <div class="docs-brand">
@@ -135,7 +140,16 @@ export default {
   },
   data () {
     return {
-      version: '1.1.0'
+      version: '1.1.0',
+      sidebar: 'close'
+    }
+  },
+  methods: {
+    openSideBar () {
+      this.sidebar = 'open'
+    },
+    closeSideBar () {
+      this.sidebar = 'close'
     }
   }
 }

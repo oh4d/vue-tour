@@ -38,6 +38,12 @@ export default {
     step: {
       type: Object
     },
+    beforePreviousStep: {
+      type: Function
+    },
+    beforeNextStep: {
+      type: Function
+    },
     previousStep: {
       type: Function
     },

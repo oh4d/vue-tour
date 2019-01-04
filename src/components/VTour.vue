@@ -3,8 +3,8 @@
     <slot
       :current-step="currentStep"
       :steps="steps"
-      :previous-step="previousStep"
-      :next-step="nextStep"
+      :previous-step="beforePreviousStep"
+      :next-step="beforeNextStep"
       :stop="stop"
       :is-first="isFirst"
       :is-last="isLast"
@@ -17,8 +17,8 @@
         v-for="(step, index) of steps"
         :key="index"
         :step="step"
-        :previous-step="previousStep"
-        :next-step="nextStep"
+        :previous-step="beforePreviousStep"
+        :next-step="beforeNextStep"
         :stop="stop"
         :is-first="isFirst"
         :is-last="isLast"
@@ -109,6 +109,16 @@ export default {
         this.customCallbacks.onStart()
         this.currentStep = typeof startStep !== 'undefined' ? parseInt(startStep, 10) : 0
       }, this.customOptions.startTimeout)
+    },
+    beforePreviousStep () {
+      if (this.currentStep > 0) {
+        this.customCallbacks.onBeforePreviousStep(this.previousStep, this.currentStep)
+      }
+    },
+    beforeNextStep () {
+      if (this.currentStep < this.numberOfSteps - 1 && this.currentStep !== -1) {
+        this.customCallbacks.onBeforeNextStep(this.nextStep, this.currentStep)
+      }
     },
     previousStep () {
       if (this.currentStep > 0) {

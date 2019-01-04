@@ -1,0 +1,21 @@
+.sidebar {
+    top: 0;
+    left: -300px;
+    bottom: 0;
+    width: 300px;
+    display: flex;
+    position: fixed;
+    background: #4fc08d;
+    align-items: center;
+    justify-content: center;
+    border-right: 2px solid #e5e5f9;
+    transition: all .3s ease;
+}
+
+.sidebar.open {
+    left: 0;
+}
+
+.sidebar .inner-siderbar {
+    // position: ;
+}
